@@ -2,7 +2,8 @@ version: '3.1'
 
 services:
   dbmysql:
-    image: mysql
+    image: mysql:8.3
+    container_name: mysql-container
     restart: always
     command: --default-authentication-plugin=mysql_native_password
     ports:
@@ -12,9 +13,6 @@ services:
       TZ: ${TIMEZONE}
     volumes:
       - ./mysql-data:/var/lib/mysql
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - ${ADMINER_PORT}:8080
+    user: "1001:1001" # change 1001 bằng UID và GID của user ngochv - id ngochv
+volumes:
+  mysql-data: 
