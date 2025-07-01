@@ -1,18 +1,18 @@
-version: '3.1'
+version: '3.8'
 
 services:
-  dbmysql:
-    image: mysql:8.3
-    container_name: mysql-container
-    restart: always
-    command: --default-authentication-plugin=mysql_native_password
+  postgres:
+    image: postgres:13
+    container_name: my-postgres
+    restart: unless-stopped
     ports:
-      - ${MYSQL_PORT}:3306
+      - "5432:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      TZ: ${TIMEZONE}
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: mydb
     volumes:
-      - ./mysql-data:/var/lib/mysql
-    user: "1001:1001" # change 1001 bằng UID và GID của user ngochv - id ngochv
+      - pgdata:/var/lib/postgresql/data
+
 volumes:
-  mysql-data: 
+  pgdata:
